@@ -2,22 +2,33 @@
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
-import { Page } from '@vben/common-ui';
+import { Page, useVbenModal } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
+import { Pencil } from 'lucide-vue-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getExampleTableApi } from '#/api';
 
-interface RowType {
-  category: string;
-  color: string;
-  id: string;
-  price: string;
-  productName: string;
-  releaseDate: string;
-}
+import FormModelDemo from './form-model-demo.vue';
 
+interface RowType {
+  createdAt: string;
+  email: string;
+  id: string;
+  name: string;
+  role: string;
+  updatedAt: string;
+}
+const [FormModal, formModalApi] = useVbenModal({
+  connectedComponent: FormModelDemo,
+});
+function openFormModal() {
+  formModalApi.setData({
+    values: { field1: 'abc' },
+  });
+  formModalApi.open();
+}
 const formOptions: VbenFormProps = {
   // 默认展开
   collapsed: false,
@@ -25,18 +36,18 @@ const formOptions: VbenFormProps = {
     {
       component: 'Input',
       defaultValue: '1',
-      fieldName: 'category',
-      label: 'Category',
+      fieldName: 'id',
+      label: 'ID',
     },
     {
       component: 'Input',
-      fieldName: 'productName',
-      label: 'ProductName',
+      fieldName: 'name',
+      label: 'Name',
     },
     {
       component: 'Input',
-      fieldName: 'price',
-      label: 'Price',
+      fieldName: 'email',
+      label: 'Email',
     },
     {
       component: 'Select',
@@ -44,23 +55,22 @@ const formOptions: VbenFormProps = {
         allowClear: true,
         options: [
           {
-            label: 'Color1',
+            label: 'USER',
             value: '1',
           },
           {
-            label: 'Color2',
+            label: 'ADMIN',
             value: '2',
           },
+          {
+            label: 'SUPER ADMIN',
+            value: '3',
+          },
         ],
-        placeholder: '请选择',
+        placeholder: 'Role',
       },
-      fieldName: 'color',
-      label: 'Color',
-    },
-    {
-      component: 'DatePicker',
-      fieldName: 'datePicker',
-      label: 'Date',
+      fieldName: 'role',
+      label: 'Role',
     },
   ],
   // 控制表单是否显示折叠按钮
@@ -75,13 +85,12 @@ const gridOptions: VxeGridProps<RowType> = {
     labelField: 'name',
   },
   columns: [
-    { title: '序号', type: 'seq', width: 50 },
-    { align: 'left', title: 'Name', type: 'checkbox', width: 100 },
-    { field: 'category', title: 'Category' },
-    { field: 'color', title: 'Color' },
-    { field: 'productName', title: 'Product Name' },
-    { field: 'price', title: 'Price' },
-    { field: 'releaseDate', formatter: 'formatDateTime', title: 'Date' },
+    { field: 'id', title: 'ID', width: 50 },
+    { field: 'name', title: 'Name' },
+    { field: 'email', title: 'Email' },
+    { field: 'role', title: 'Role' },
+    { field: 'createdAt', formatter: 'formatDateTime', title: 'Create Date' },
+    { field: 'updatedAt', formatter: 'formatDateTime', title: 'Updated Date' },
     {
       field: 'action',
       fixed: 'right',
@@ -99,7 +108,6 @@ const gridOptions: VxeGridProps<RowType> = {
         return await getExampleTableApi({
           page: page.currentPage,
           pageSize: page.pageSize,
-          ...formValues,
         });
       },
     },
@@ -113,7 +121,10 @@ const [Grid] = useVbenVxeGrid({ formOptions, gridOptions });
   <Page auto-content-height>
     <Grid>
       <template #action>
-        <Button type="link">edit</Button>
+        <FormModal />
+        <Button type="primary" @click="openFormModal">
+          <Pencil size="16px" />
+        </Button>
       </template>
     </Grid>
   </Page>

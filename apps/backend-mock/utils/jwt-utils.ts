@@ -31,17 +31,24 @@ export function verifyAccessToken(
     return null;
   }
 
-  const token = authHeader.split(' ')[1];
-  try {
-    const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET) as UserPayload;
+  // const token = authHeader.split(' ')[1];
+  // try {
+  //   const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET) as UserPayload;
 
-    const username = decoded.username;
-    const user = MOCK_USERS.find((item) => item.username === username);
-    const { password: _pwd, ...userinfo } = user;
-    return userinfo;
-  } catch {
-    return null;
-  }
+  //   const username = decoded.username;
+  //   const user = MOCK_USERS.find((item) => item.username === username);
+  //   const { password: _pwd, ...userinfo } = user;
+  //   return userinfo;
+  // } catch {
+  //   return null;
+  // }
+  return {
+    id: 0,
+    email: 'any@gmail.com',
+    password: 'any',
+    name: 'any',
+    role: 'USER',
+  };
 }
 
 export function verifyRefreshToken(

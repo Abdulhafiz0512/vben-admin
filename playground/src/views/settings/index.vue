@@ -10,12 +10,11 @@ import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getExampleTableApi } from '#/api';
 
 interface RowType {
-  category: string;
-  color: string;
+  createdAt: string;
   id: string;
-  price: string;
-  productName: string;
-  releaseDate: string;
+  key: string;
+  updatedAt: string;
+  value: string;
 }
 
 const formOptions: VbenFormProps = {
@@ -25,42 +24,18 @@ const formOptions: VbenFormProps = {
     {
       component: 'Input',
       defaultValue: '1',
-      fieldName: 'category',
-      label: 'Category',
+      fieldName: 'id',
+      label: 'ID',
     },
     {
       component: 'Input',
-      fieldName: 'productName',
-      label: 'ProductName',
+      fieldName: 'key',
+      label: 'Key',
     },
     {
       component: 'Input',
-      fieldName: 'price',
-      label: 'Price',
-    },
-    {
-      component: 'Select',
-      componentProps: {
-        allowClear: true,
-        options: [
-          {
-            label: 'Color1',
-            value: '1',
-          },
-          {
-            label: 'Color2',
-            value: '2',
-          },
-        ],
-        placeholder: '请选择',
-      },
-      fieldName: 'color',
-      label: 'Color',
-    },
-    {
-      component: 'DatePicker',
-      fieldName: 'datePicker',
-      label: 'Date',
+      fieldName: 'value',
+      label: 'Value',
     },
   ],
   // 控制表单是否显示折叠按钮
@@ -75,13 +50,11 @@ const gridOptions: VxeGridProps<RowType> = {
     labelField: 'name',
   },
   columns: [
-    { title: '序号', type: 'seq', width: 50 },
-    { align: 'left', title: 'Name', type: 'checkbox', width: 100 },
-    { field: 'category', title: 'Category' },
-    { field: 'color', title: 'Color' },
-    { field: 'productName', title: 'Product Name' },
-    { field: 'price', title: 'Price' },
-    { field: 'releaseDate', formatter: 'formatDateTime', title: 'Date' },
+    { field: 'id', title: 'ID', width: 50 },
+    { field: 'key', title: 'Key' },
+    { field: 'value', title: 'Value' },
+    { field: 'createdAt', formatter: 'formatDateTime', title: 'Create Date' },
+    { field: 'updatedAt', formatter: 'formatDateTime', title: 'Updated Date' },
     {
       field: 'action',
       fixed: 'right',
@@ -99,7 +72,6 @@ const gridOptions: VxeGridProps<RowType> = {
         return await getExampleTableApi({
           page: page.currentPage,
           pageSize: page.pageSize,
-          ...formValues,
         });
       },
     },

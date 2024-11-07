@@ -16,3 +16,9 @@ async function getExampleTableApi(params: DemoTableApi.PageFetchParams) {
 }
 
 export { getExampleTableApi };
+
+async function getTable(url: string) {
+  return requestClient.get(url);
+}
+
+export { getTable };
