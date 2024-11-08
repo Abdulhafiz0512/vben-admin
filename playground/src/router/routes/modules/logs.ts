@@ -17,7 +17,7 @@ const routes: RouteRecordRaw[] = [
       {
         name: 'Logs List',
         path: '/loglist',
-        component: () => import('#/views/logs/index.vue'),
+        component: () => import('#/views/user-logs/index.vue'),
         meta: {
           icon: 'lucide:logs',
           title: $t('Logs List'),
