@@ -35,7 +35,6 @@ const formOptions: VbenFormProps = {
   schema: [
     {
       component: 'Input',
-      defaultValue: '1',
       fieldName: 'id',
       label: 'ID',
     },
@@ -108,6 +107,7 @@ const gridOptions: VxeGridProps<RowType> = {
         return await getExampleTableApi({
           page: page.currentPage,
           pageSize: page.pageSize,
+          ...formValues,
         });
       },
     },

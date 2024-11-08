@@ -12,7 +12,9 @@ export namespace DemoTableApi {
  * 获取示例表格数据
  */
 async function getExampleTableApi(params: DemoTableApi.PageFetchParams) {
-  return requestClient.get('/table/list', { params });
+  return requestClient.get('https://gis.my.kube.uz/api/user/getUsers', {
+    params,
+  });
 }
 
 export { getExampleTableApi };

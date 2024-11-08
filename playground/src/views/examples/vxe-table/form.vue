@@ -63,9 +63,10 @@ const formOptions: VbenFormProps = {
       label: 'Date',
     },
   ],
-  // 控制表单是否显示折叠按钮
+  // Control whether the form shows the folding button
   showCollapseButton: true,
-  // 按下回车时是否提交表单
+
+  // Whether to submit the form when press Enter
   submitOnEnter: false,
 };
 

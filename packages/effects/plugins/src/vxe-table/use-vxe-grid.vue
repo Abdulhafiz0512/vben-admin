@@ -288,7 +288,7 @@ onMounted(() => {
         <slot name="toolbar-actions" v-bind="slotProps"> </slot>
       </template>
 
-      <!-- 继承默认的slot -->
+      <!-- Default slot -->
       <template
         v-for="slotName in delegatedSlots"
         :key="slotName"
